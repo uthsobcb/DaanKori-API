@@ -55,6 +55,23 @@ public class AuthController {
         Long userId = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         double amount = Double.parseDouble(topUpRequest.get("amount").toString());
         userService.topUpBalance(userId, amount);
-        return ResponseEntity.ok().build();
+        
+        // Get updated user details
+        User user = userService.getUserById(userId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Balance topped up successfully!");
+        response.put("newBalance", user.getBalance());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserDetails() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Map<String, Object> response = new HashMap<>();
+        response.put("username", user.getUsername());
+        response.put("fullName", user.getFullName());
+        response.put("email", user.getEmail());
+        response.put("balance", user.getBalance());
+        return ResponseEntity.ok(response);
     }
 } 

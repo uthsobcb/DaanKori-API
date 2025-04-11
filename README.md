@@ -45,6 +45,7 @@ https://documenter.getpostman.com/view/16185131/2sB2cXA23s
 - POST `/api/auth/register` - Register a new user
 - POST `/api/auth/login` - Login and get JWT token
 - POST `/api/auth/topup` - Top up user balance
+- GET `/api/auth/user` - Get authenticated user details
 
 ### Campaigns
 - GET `/api/campaigns` - Get all active campaigns
@@ -93,8 +94,21 @@ Content-Type: application/json
 
 Response:
 {
-    "token": "eyJhbGciOiJIUzI1NiJ9...",
-    "username": "john_doe"
+    "token": "eyJhbGciOiJIUzI1NiJ9..."
+}
+```
+
+#### Get User Details
+```http
+GET /api/auth/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+
+Response:
+{
+    "username": "john_doe",
+    "fullName": "John Doe",
+    "email": "john@example.com",
+    "balance": 1000.00
 }
 ```
 
@@ -110,8 +124,7 @@ Content-Type: application/json
 
 Response:
 {
-    "status": "success",
-    "message": "Balance updated successfully",
+    "message": "Balance topped up successfully!",
     "newBalance": 1000.00
 }
 ```

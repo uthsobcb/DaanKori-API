@@ -54,4 +54,9 @@ public class UserService implements UserDetailsService {
         user.setBalance(user.getBalance() - amount);
         userRepository.save(user);
     }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 } 
